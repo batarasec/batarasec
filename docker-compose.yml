@@ -1,0 +1,83 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-batarasec}
+      POSTGRES_USER: ${POSTGRES_USER:-batarasec}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me-postgres-password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-batarasec} -d ${POSTGRES_DB:-batarasec}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    image: ghcr.io/novanovn/batarasec:${BATARASEC_API_TAG:-api-community-0.1.0}
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - vuln_db:/var/lib/batarasec/vuln-db
+      - agent_binaries:/var/lib/batarasec/agent-binaries
+      - backups:/var/lib/batarasec/backups
+
+  worker:
+    image: ghcr.io/novanovn/batarasec:${BATARASEC_WORKER_TAG:-worker-community-0.1.0}
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - vuln_db:/var/lib/batarasec/vuln-db
+      - agent_binaries:/var/lib/batarasec/agent-binaries
+      - backups:/var/lib/batarasec/backups
+
+  web:
+    image: ghcr.io/novanovn/batarasec:${BATARASEC_WEB_TAG:-web-community-0.1.0}
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - api
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    depends_on:
+      - api
+      - web
+    ports:
+      - "${HTTP_PORT:-8088}:80"
+      - "${HTTPS_PORT:-8444}:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro
+
+volumes:
+  postgres_data:
+  redis_data:
+  vuln_db:
+  agent_binaries:
+  backups:
