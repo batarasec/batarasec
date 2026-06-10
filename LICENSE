@@ -1,0 +1,52 @@
+BataraSec Community License - Draft
+
+IMPORTANT: This is a planning draft for review and is not legal advice.
+Do not publish this license for production use until reviewed and approved.
+
+1. Definitions
+
+"BataraSec Community" means the Community distribution of BataraSec provided through the public BataraSec Community repository, installer, documentation, Docker Compose files, and Community container images.
+
+"Internal Use" means use by an individual or organization for its own internal security, vulnerability management, development, testing, operations, or compliance activities.
+
+"Commercial Hosting" means offering BataraSec Community, or a modified version of it, to third parties as a hosted SaaS, managed service, security service, resale product, or substantially similar commercial offering.
+
+2. Permitted Use
+
+You may use BataraSec Community for free for Internal Use, including internal production deployments.
+
+You may copy and use the public installer, Docker Compose files, documentation, and configuration examples as needed to deploy BataraSec Community for Internal Use.
+
+3. Restrictions
+
+You may not, without a separate written commercial agreement with BataraSec:
+
+- Offer BataraSec Community as a SaaS, hosted service, managed service, or service bureau to third parties.
+- Resell BataraSec Community or access to BataraSec Community.
+- Fork, rebrand, modify, package, or redistribute BataraSec Community as a competing commercial product.
+- Remove BataraSec branding, trademarks, notices, or license references from Community distributions.
+- Use BataraSec Community to provide a commercial vulnerability management platform to third parties.
+
+4. Enterprise Features
+
+Enterprise, Portal, Central KB, advanced branding, advanced agent release management, advanced reporting, support SLA, and other commercial features may require a separate Enterprise license or commercial agreement.
+
+5. Ownership
+
+BataraSec and its licensors retain all rights, title, and interest in BataraSec Community, BataraSec Enterprise, trademarks, branding, and related materials except for rights expressly granted in this license.
+
+6. No Warranty
+
+BataraSec Community is provided "as is" without warranties of any kind, whether express, implied, statutory, or otherwise, including warranties of merchantability, fitness for a particular purpose, and non-infringement.
+
+7. Limitation of Liability
+
+To the maximum extent permitted by law, BataraSec and its contributors will not be liable for any indirect, incidental, special, consequential, exemplary, or punitive damages, or any loss of profits, revenue, data, goodwill, or business interruption arising from use of BataraSec Community.
+
+8. Termination
+
+Your rights under this license terminate automatically if you violate these terms. Upon termination, you must stop using BataraSec Community except as otherwise permitted by a separate written agreement.
+
+9. Contact
+
+For Enterprise licensing, commercial hosting, resale, or special permission, contact BataraSec through the official project channels listed in the public repository.
