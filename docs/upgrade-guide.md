@@ -18,16 +18,23 @@ Do not use Enterprise, staging, or customer image tags for Community installs.
 
 ## Upgrade from Community to Enterprise
 
+Community does not become Enterprise only by entering a license key. The supported upgrade path is a reviewed migration: create a Community backup, install a clean Enterprise runtime, restore the backup, activate/verify the Enterprise license, then cut over after validation.
+
 Community installs are intentionally placed under `/opt/batarasec-community`. Enterprise installs should use `/opt/batarasec` or another Enterprise-approved runtime directory so the migration can be reviewed and rolled back safely.
 
 Recommended upgrade flow:
 
 1. Back up the Community instance from `/opt/batarasec-community`.
-2. Request or activate an Enterprise license.
-3. Prepare Enterprise images, compose, and environment in `/opt/batarasec`.
-4. Restore or migrate Community data into the Enterprise runtime using the approved backup/restore path.
-5. Set Enterprise-only environment values, such as license and Portal/Central KB settings, only after the Enterprise runtime is ready.
-6. Start Enterprise services and verify health, login, data counts, license status, and Enterprise-only features.
-7. Keep `/opt/batarasec-community` stopped but intact until the Enterprise migration is accepted, then remove it after backup retention requirements are met.
+2. Copy the backup archive to the Enterprise server or another secure location.
+3. Request Enterprise access, Enterprise images, and a valid Enterprise license from BataraSec.
+4. Install Enterprise into a clean runtime directory, usually `/opt/batarasec`.
+5. Restore the Community backup during the Enterprise installer flow, or use the server-side restore CLI for large backups.
+6. Apply or verify the Enterprise license after restore.
+7. Verify health, login, project counts, vulnerability counts, scan history, agent binaries, and Enterprise-only features.
+8. Keep `/opt/batarasec-community` stopped but intact until the Enterprise migration is accepted, then remove it after backup retention requirements are met.
+
+For large backups, prefer server-side CLI restore over browser upload to avoid upload timeout, reverse-proxy limits, and memory pressure. Run the restore in `tmux` or another persistent shell session.
 
 Do not overwrite `/opt/batarasec-community` in place for the first Enterprise migration. Side-by-side migration is safer and makes rollback possible.
+
+Detailed Enterprise restore commands, private registry access, license activation steps, and operator checklists are provided with Enterprise access and are not published in the Community repository.
